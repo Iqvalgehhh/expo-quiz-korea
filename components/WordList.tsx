@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, FlatList } from 'react-native';
 import React from 'react';
 import * as Speech from 'expo-speech';
 import { Day1Word, Day2Word, Day3Word, Day4Word, Day5Word, Day6Word, Day7Word, Day8Word, Day9Word, Day10Word } from '@/utils';
@@ -10,7 +10,7 @@ const WordList = ({ id }: { id: string; }) => {
 
     let data;
 
-const router=useRouter();
+    const router=useRouter();
 
     switch (id) {
         case "c1":
@@ -60,89 +60,71 @@ const router=useRouter();
 
 
 
+
+
+
     return (
-        <View style={styles.container}>
-            <View style={styles.gameContainer}>
-                <Pressable style={styles.gameButton}
-                onPress={()=>{
-                    router.push({pathname:'/flash', params:{id:id}})
-                }}>
-                <Text style={styles.gameText}>Flash Game</Text>
+            <View style={styles.container}>
+                <View style={styles.gameContainer}>
+                    <Pressable style={styles.gameButton}
+                    onPress={()=>{
+                        router.push({pathname:'/flash', params:{id:id}})
+                    }}>
+                    <Text style={styles.gameText}>Flash Game</Text>
 
-                </Pressable>
-                <Pressable style={styles.gameButton}
-                    onPress={() => {
-                        router.push({ pathname: '/quiz', params: { id: id } });
-                    }}
-                >
-                <Text style={styles.gameText}>Quiz Game</Text>
+                    </Pressable>
+                    <Pressable style={styles.gameButton}
+                        onPress={() => {
+                            router.push({ pathname: '/quiz', params: { id: id } });
+                        }}
+                    >
+                    <Text style={styles.gameText}>Quiz Game</Text>
 
-                </Pressable>
-            </View>
-            <FlashList
-                renderItem={({ item, index }) => {
-                    return (
-
-                        <View style={styles.cardContainer}>
-                            <Text style={styles.titleWord}>Word:{index + 1}</Text>
-
-                            <View style={styles.wordContainer}>
-                                <Text style={styles.wordsText}>
-                                    {item.Word}
-                                </Text>
-                                <Pressable onPress={() => {
+                    </Pressable>
+                </View>
+                <FlatList
+                    data={data}
+                    renderItem={({ item }) => {
+                        return (
+                            <View style={styles.cardContainer}>
+                                <Text style={styles.wordContainer} onPress={() => {
                                     speech(item.Word);
                                 }}>
-                                    <FontAwesome5 name="music" size={24} color="black" />
-                                </Pressable>
-                            </View>
-
-                            <View style={styles.wordContainer}>
-                                <Text style={styles.wordsText}>
+                                    {item.Word}
+    
+                                </Text>
+                                
+                                <Text style={styles.wordContainer} onPress={() => {
+                                        speech(item.Word_Meaning);
+                                    }}>
                                     {item.Word_Meaning}
+                                    
+    
                                 </Text>
-                                <Pressable onPress={() => {
-                                    speechKorean(item.Word_Meaning);
-                                }}>
-                                    <FontAwesome5 name="music" size={24} color="black" />
-                                </Pressable>
-                            </View>
-
-                            <Text style={styles.separator} />
-
-                            <View style={styles.wordContainer}>
-                                <Text>
+    
+                                <Text style={styles.wordContainer} onPress={() => {
+                                        speech(item.English_Sentence);
+                                    }}>
                                     {item.English_Sentence}
+                                    
                                 </Text>
-                                <Pressable onPress={() => {
-                                    speech(item.English_Sentence);
-                                }}>
-                                    <FontAwesome5 name="music" size={24} color="black" />
-                                </Pressable>
-                            </View>
-
-                            <View style={styles.wordContainer}>
-                                <Text>
+    
+                                <Text style={styles.wordContainer} onPress={() => {
+                                        speech(item.English_Sentence_Mean);
+                                    }}>
                                     {item.English_Sentence_Mean}
+                                    
                                 </Text>
-                                <Pressable onPress={() => {
-                                    speechKorean(item.English_Sentence_Mean);
-                                }}>
-                                    <FontAwesome5 name="music" size={24} color="black" />
-                                </Pressable>
                             </View>
+                        );
+                    }}
+                />
+                </View>
 
-                        </View>
-                    );
-
-
-                }}
-                estimatedItemSize={10}
-                data={data}
-            />
-        </View>
+       
     );
 };
+
 
 export default WordList;
 
@@ -151,33 +133,29 @@ const styles = StyleSheet.create({
         flex: 1,
         margin: 20,
         justifyContent: 'center',
-        marginTop: 50,
+        marginTop: 20,
         marginBottom: 50,
     },
     cardContainer: {
         padding: 5,
         height: 250,
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
+        alignItems:'center',
         borderWidth: 1,
         borderRadius: 15,
-        margin: 5,
-        marginBottom: 10
+        margin: 50,
     },
     wordContainer: {
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginLeft: 50,
-        marginRight: 50,
-    },
-    wordsText: {
         fontSize: 26,
         fontWeight: 'bold'
     },
+    speech: {
+        position:'absolute',
+        right:0
+    },
     titleWord: {
-        position: 'absolute',
-        top: 5,
-        left: 5
+       
     },
     separator: {
         height: 1,
@@ -187,21 +165,19 @@ const styles = StyleSheet.create({
     gameContainer: {
         justifyContent: 'space-evenly',
         flexDirection: 'row',
-        borderWidth: 1,
+    },
+    gameButton: {
+        backgroundColor: 'white',
         borderRadius: 5,
-        backgroundColor: 'grey',
+        borderColor:'red',
+        margin: 1,
+        elevation: 3,
+        height: 35,
+        borderWidth: 2,
     },
-    gameButton:{
-        backgroundColor:'grey',
-        borderRadius:5,
-        margin:1,
-        elevation:3,
-        height:35,
-        borderWidth:2,
-    },
-    gameText:{
-        fontSize:18,
-        color:'black',
-padding:3,
+    gameText: {
+        fontSize: 18,
+        color: 'black',
+        padding: 3,
     }
 });
