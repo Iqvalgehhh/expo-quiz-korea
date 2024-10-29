@@ -80,7 +80,7 @@ const KoreanQuizGame = ({ id }: { id: string; }) => {
                     <Pressable
                         onPress={() => { router.push({ pathname: "/quiz", params: { id: id } }); }}
                     >
-                        <Text>Match English Meaning</Text>
+                        <Text>Switch Quiz : Match English Meaning</Text>
                     </Pressable>
                 </View>
                 <View style={styles.upperContainer}>
@@ -156,7 +156,7 @@ const KoreanQuizGame = ({ id }: { id: string; }) => {
     };
 
     const validateAnswer = (selectOption: any) => {
-        let correct_option = data[currentQuestionIndex].Correct_Answer_Korean_Mean;
+        let correct_option = data[currentQuestionIndex].Correct_Answer;
         setCurrentOptionSelected(selectOption);
         setCurrentOption(correct_option);
         setIsOptionDisabled(true);
@@ -182,6 +182,26 @@ const KoreanQuizGame = ({ id }: { id: string; }) => {
         }).start();
     };
 
+    const exitQuiz = () => {
+
+        setShowScoreMode(false);
+
+        setCurrentQuestionIndex(0);
+        setCurrentOptionSelected(null);
+        setCurrentOption(null);
+        setIsOptionDisabled(false);
+        setShowNextButton(false);
+        Animated.timing(progress, {
+            toValue: 0,
+            duration: 1000,
+            useNativeDriver: false
+        }).stop();
+        exit();
+    };
+
+const exit = () => { router.push({ pathname: "..", params: { id: id } }); }
+
+
     return (
         <View style={styles.container}>
             {renderProgressBar()}
@@ -203,6 +223,11 @@ const KoreanQuizGame = ({ id }: { id: string; }) => {
                         onPress={retryQuiz}
                     >
                         <Text style={styles.modalTryText}>Retry</Text>
+                    </Pressable>
+                    <Pressable style={styles.modalTryButton}
+                        onPress={exitQuiz}
+                    >
+                        <Text style={styles.modalTryText}>Go to other stage</Text>
                     </Pressable>
                 </View>
             </Modal>
@@ -312,7 +337,8 @@ const styles = StyleSheet.create({
         width: '40%',
         backgroundColor: 'white',
         alignItems: 'center',
-        borderRadius: 7
+        borderRadius: 7,
+        marginVertical:10
     },
     modalTryText: {
         color: 'black',

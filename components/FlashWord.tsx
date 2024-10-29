@@ -86,8 +86,8 @@ const [speed, setSpeed] = useState(5000)
                 
             </View>
                 <View style={styles.textContainer}>
-                    <Text style={styles.speedText}>Speed : {speed==5000?'Middle':speed==5500?'Slow':'Fast'}</Text>
-                    <Pressable onPress={()=>setSpeed(5500)}>
+                    <Text style={styles.speedText}>Speed : {speed==5000?'Middle':speed==6000?'Slow':'Fast'}</Text>
+                    <Pressable onPress={()=>setSpeed(6000)}>
                     <Text style={styles.speedText}>Slow</Text>
                 </Pressable >
                     <Pressable onPress={() => setSpeed(5000)}>
@@ -100,7 +100,7 @@ const [speed, setSpeed] = useState(5000)
                 <View style={styles.flashContainer}>
                     <Text style={styles.words}>{currentWord}</Text>
                 <Text style={styles.wordsMean}>{currentWordMeaning}</Text>
-<Button onPress={() => setStopEffect(!stopEffect)} title='Flash Words Start'></Button>
+<Button onPress={() => setStopEffect(!stopEffect)} title='Press to stop/start'></Button>
                 </View>
         </View>
     );

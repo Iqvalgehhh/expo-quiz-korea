@@ -7,7 +7,7 @@ import { useRouter } from 'expo-router';
 
 const QuizGame = ({ id }: { id: string; }) => {
     let data: any;
-    const router=useRouter()
+    const router = useRouter();
     switch (id) {
         case "c1":
             data = oxDay1;
@@ -78,9 +78,9 @@ const QuizGame = ({ id }: { id: string; }) => {
             }>
                 <View style={styles.twoGameContainer}>
                     <Pressable
-                     onPress={()=>{router.push({pathname:"/koreaQuiz", params:{id:id}})}}
+                        onPress={() => { router.push({ pathname: "/koreaQuiz", params: { id: id } }); }}
                     >
-                        <Text>Match Korean Meaning</Text>
+                        <Text>Switch Quiz : Match Korean Meaning</Text>
                     </Pressable>
                 </View>
                 <View style={styles.upperContainer}>
@@ -166,21 +166,40 @@ const QuizGame = ({ id }: { id: string; }) => {
         setShowNextButton(true);
     };
 
-    const retryQuiz=()=>{
-        
-            setShowScoreMode(false);
-       
-            setCurrentQuestionIndex(0);
-            setCurrentOptionSelected(null);
-            setCurrentOption(null);
-            setIsOptionDisabled(false);
-            setShowNextButton(false);
-       Animated.timing(progress, {
+    const retryQuiz = () => {
+
+        setShowScoreMode(false);
+
+        setCurrentQuestionIndex(0);
+        setCurrentOptionSelected(null);
+        setCurrentOption(null);
+        setIsOptionDisabled(false);
+        setShowNextButton(false);
+        Animated.timing(progress, {
             toValue: 0,
             duration: 1000,
             useNativeDriver: false
         }).start();
-    }
+    };
+
+    const exitQuiz = () => {
+
+        setShowScoreMode(false);
+
+        setCurrentQuestionIndex(0);
+        setCurrentOptionSelected(null);
+        setCurrentOption(null);
+        setIsOptionDisabled(false);
+        setShowNextButton(false);
+        Animated.timing(progress, {
+            toValue: 0,
+            duration: 1000,
+            useNativeDriver: false
+        }).stop();
+        exit();
+    };
+
+    const exit = () => { router.push({ pathname: "..", params: { id: id } }); }
 
     return (
         <View style={styles.container}>
@@ -193,16 +212,23 @@ const QuizGame = ({ id }: { id: string; }) => {
             }>
                 <View style={styles.modalContainer}>
                     <View style={styles.modalCardContainer}>
-<Text style={styles.modalText}>{score>(data.length/2)?'Congrats! go to next stage':'Try again'}</Text>
+                        <Text style={styles.modalText}>{score > (data.length / 2) ? 'Congrats! go to next stage' : 'Try again'}</Text>
                     </View>
                     <View style={styles.modalScoreContainer}>
                         <Text style={styles.scoreText}>{score}</Text>
                         <Text style={styles.scoreText}> / {data.length}</Text>
                     </View>
                     <Pressable style={styles.modalTryButton}
-                    onPress={retryQuiz}
+                        onPress={retryQuiz}
                     >
                         <Text style={styles.modalTryText}>Retry</Text>
+
+                    </Pressable>
+                    <Pressable style={styles.modalTryButton}
+                        onPress={exitQuiz}
+                    >
+                        <Text style={styles.modalTryText}>Go to other stage</Text>
+
                     </Pressable>
                 </View>
             </Modal>
@@ -280,44 +306,45 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'white'
     },
-    modalContainer:{
-        alignItems:'center',
-justifyContent:'center',
-backgroundColor:'grey',
-flex:1,
+    modalContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'grey',
+        flex: 1,
     },
-    modalCardContainer:{
-        backgroundColor:'white',
-        width:'90%',
-        borderRadius:20,
-        padding:20,
-        alignItems:'center'
+    modalCardContainer: {
+        backgroundColor: 'white',
+        width: '90%',
+        borderRadius: 20,
+        padding: 20,
+        alignItems: 'center'
     },
-    modalText:{
-        fontSize:30,
-        fontWeight:'bold'
+    modalText: {
+        fontSize: 30,
+        fontWeight: 'bold'
     },
-    modalScoreContainer:{
-        flexDirection:'row',
-        alignItems:'center',
-        marginVertical:20
+    modalScoreContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 20
     },
-    scoreText:{
-        fontSize:22,
-        opacity:0.6,
-        marginRight:2
+    scoreText: {
+        fontSize: 22,
+        opacity: 0.6,
+        marginRight: 2
     },
-    modalTryButton:{
-        padding:2,
-        width:'40%',
-        backgroundColor:'white',
-        alignItems:'center',
-        borderRadius:7
+    modalTryButton: {
+        padding: 2,
+        width: '40%',
+        backgroundColor: 'white',
+        alignItems: 'center',
+        borderRadius: 7,
+        marginVertical: 10
     },
-    modalTryText:{
-        color:'black',
-        fontSize:20,
-        fontWeight:'bold'
+    modalTryText: {
+        color: 'black',
+        fontSize: 20,
+        fontWeight: 'bold'
     }
 
 });
