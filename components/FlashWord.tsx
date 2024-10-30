@@ -82,7 +82,7 @@ const [speed, setSpeed] = useState(5000)
         <View style={styles.container}>
             <View style={styles.upperContainer}>
                 <Text>{currentWordIndex + 1} / </Text>
-                <Text>{data.length} </Text>
+                <Text>{data.length}, Don't forget to choose the speed mode </Text>
                 
             </View>
                 <View style={styles.textContainer}>
@@ -100,7 +100,8 @@ const [speed, setSpeed] = useState(5000)
                 <View style={styles.flashContainer}>
                     <Text style={styles.words}>{currentWord}</Text>
                 <Text style={styles.wordsMean}>{currentWordMeaning}</Text>
-<Button onPress={() => setStopEffect(!stopEffect)} title='Press to stop/start'></Button>
+                <Pressable onPress={() => setStopEffect(!stopEffect)}> 
+                    <Text style={styles.wordButton}>Press to start or stop</Text></Pressable>
                 </View>
         </View>
     );
@@ -115,14 +116,14 @@ const styles = StyleSheet.create({
     },
     upperContainer: {
         flexDirection: 'row',
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        marginBottom:10
     },
     textContainer:{
         justifyContent:'space-evenly',
         flexDirection:'row',
-        borderWidth:1,
         borderRadius:5,
-        backgroundColor:'black',
+        backgroundColor:'#f50ca0',
 
     },
     speedText:{
@@ -139,10 +140,16 @@ color:'white',
     fontSize:32,
     fontWeight:'bold',
     marginBottom:10
-
    },wordsMean:{
 fontSize:20,
 marginBottom:20,
-
+   },
+   wordButton:{
+       borderWidth: 1, 
+       borderColor: '#fff', 
+       padding: 3, 
+       borderRadius: 7, 
+       backgroundColor: '#f50ca0', 
+       color: '#fff'
    }
 });

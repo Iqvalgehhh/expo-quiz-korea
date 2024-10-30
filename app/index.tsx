@@ -14,7 +14,8 @@ const index = () => {
       }}
       estimatedItemSize={10}
       data={category}
-      numColumns={2}
+      numColumns={1}
+      
     />
   );
 };

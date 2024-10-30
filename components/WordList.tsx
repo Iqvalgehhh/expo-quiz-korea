@@ -70,7 +70,7 @@ const WordList = ({ id }: { id: string; }) => {
                     onPress={()=>{
                         router.push({pathname:'/flash', params:{id:id}})
                     }}>
-                    <Text style={styles.gameText}>Flash Game</Text>
+                    <Text style={styles.gameText}>Flashcard</Text>
 
                     </Pressable>
                     <Pressable style={styles.gameButton}
@@ -95,7 +95,7 @@ const WordList = ({ id }: { id: string; }) => {
                                 </Text>
                                 
                                 <Text style={styles.wordContainer} onPress={() => {
-                                        speech(item.Word_Meaning);
+                                        speechKorean(item.Word_Meaning);
                                     }}>
                                     {item.Word_Meaning}
                                     
@@ -110,7 +110,7 @@ const WordList = ({ id }: { id: string; }) => {
                                 </Text>
     
                                 <Text style={styles.wordContainer} onPress={() => {
-                                        speech(item.English_Sentence_Mean);
+                                        speechKorean(item.English_Sentence_Mean);
                                     }}>
                                     {item.English_Sentence_Mean}
                                     
@@ -154,22 +154,16 @@ const styles = StyleSheet.create({
         position:'absolute',
         right:0
     },
-    titleWord: {
-       
-    },
-    separator: {
-        height: 1,
-        backgroundColor: 'black',
-        marginVertical: 10
-    },
+
+    
     gameContainer: {
         justifyContent: 'space-evenly',
         flexDirection: 'row',
     },
     gameButton: {
-        backgroundColor: 'white',
-        borderRadius: 5,
-        borderColor:'red',
+        backgroundColor: '#f50ca0',
+        borderRadius: 7,
+        borderColor:'#f50ca0',
         margin: 1,
         elevation: 3,
         height: 35,
@@ -177,6 +171,8 @@ const styles = StyleSheet.create({
     },
     gameText: {
         fontSize: 18,
+        fontStyle:'italic',
+        fontWeight:'bold',
         color: 'black',
         padding: 3,
     }

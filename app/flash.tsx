@@ -6,7 +6,7 @@ import { useGlobalSearchParams } from 'expo-router';
 const flash = () => {
     const item=useGlobalSearchParams();
   return (
-    <FlashWord id={item.id as string}/>
+    <FlashWord id={item.id as string} />
   )
 }
 

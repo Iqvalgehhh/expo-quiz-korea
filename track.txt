@@ -1,2 +1,0 @@
-   package.json
-    "reset-project": "node ./scripts/reset-project.js",

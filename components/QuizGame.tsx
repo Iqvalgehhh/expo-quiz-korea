@@ -80,7 +80,7 @@ const QuizGame = ({ id }: { id: string; }) => {
                     <Pressable
                         onPress={() => { router.push({ pathname: "/koreaQuiz", params: { id: id } }); }}
                     >
-                        <Text>Switch Quiz : Match Korean Meaning</Text>
+                        <Text>Prees to Switch Quiz : Match Korean Meaning</Text>
                     </Pressable>
                 </View>
                 <View style={styles.upperContainer}>
